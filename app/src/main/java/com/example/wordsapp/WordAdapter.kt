@@ -2,7 +2,6 @@
 package com.example.wordsapp
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
 class WordAdapter(private val letterId: String, context: Context) :
     RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
@@ -48,8 +48,10 @@ class WordAdapter(private val letterId: String, context: Context) :
         holder.button.text = item
         holder.button.setOnClickListener {
             val queryUrl: Uri = Uri.parse("${WordListFragment.SEARCH_PREFIX}${item}")
-            val intent = Intent(Intent.ACTION_VIEW, queryUrl)
-            context.startActivity(intent)
+            val Builder:CustomTabsIntent.Builder=CustomTabsIntent.Builder()
+            val customTabsIntent:CustomTabsIntent=Builder.build()
+            customTabsIntent.launchUrl(context,queryUrl)
+
         }
     }
     companion object Accessibility : View.AccessibilityDelegate() {
